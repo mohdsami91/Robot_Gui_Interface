@@ -10,7 +10,7 @@
 			],
 			"iconify": [
 				{
-					"icon": "dash:admin-generic",
+					"icon": "feather:settings",
 					"color": "white",
 					"size": 32,
 					"animation": "breathe",
@@ -48,7 +48,7 @@
 			"animateOn": "hover",
 			"iconify": [
 				{
-					"icon": "font-awesome:brands:amazon",
+					"icon": "feather:aperture",
 					"color": "white",
 					"size": 32,
 					"animation": "spin",
@@ -72,7 +72,7 @@
 			"animation": "background",
 			"iconify": [
 				{
-					"icon": "font-awesome:brands:google-play",
+					"icon": "feather:sliders",
 					"color": "white",
 					"size": 32,
 					"animation": "breathe",
@@ -86,7 +86,7 @@
 			"animationDuration": 1000,
 			"iconify": [
 				{
-					"icon": "font-awesome:brands:bitcoin",
+					"icon": "feather:trending-up",
 					"color": "white",
 					"size": 32,
 					"animation": "breathe",
@@ -112,7 +112,7 @@
 			"animateOn": "click",
 			"iconify": [
 				{
-					"icon": "font-awesome:brands:grav",
+					"icon": "feather:zap",
 					"color": "white",
 					"size": 32,
 					"animation": "breathe",
@@ -136,7 +136,7 @@
 			],
 			"iconify": [
 				{
-					"icon": "font-awesome:brands:node",
+					"icon": "feather:hexagon",
 					"color": "white",
 					"size": 32,
 					"animation": "breathe",
@@ -151,7 +151,7 @@
 			"animationDuration": 1000,
 			"iconify": [
 				{
-					"icon": "font-awesome:solid:heart",
+					"icon": "feather:heart",
 					"color": "red",
 					"size": 32,
 					"animation": "spin",
@@ -165,7 +165,7 @@
 			"animation": "border",
 			"iconify": [
 				{
-					"icon": "material-design:youtube",
+					"icon": "feather:play",
 					"color": "red",
 					"size": 32,
 					"animation": "spin",
