@@ -64,7 +64,7 @@ Applying Iconfy from json is currently unstable, if you face problems then try a
 ## IMPORTS
 ########################################################################
 import sys
-Replaced the icon system with Qt's built-in standard iconsfrom PySide6.QtCore import *
+#Replaced the icon system with Qt's built-in standard iconsfrom PySide6.QtCore import *
 from PySide6.QtWidgets import *
 from PySide6.QtGui import *
 
