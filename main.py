@@ -64,9 +64,9 @@ Applying Iconfy from json is currently unstable, if you face problems then try a
 ## IMPORTS
 ########################################################################
 import sys
-import iconify as ico
-from iconify.qt import QtGui, QtWidgets, QtCore
-from PySide2.QtCore import *
+Replaced the icon system with Qt's built-in standard iconsfrom PySide6.QtCore import *
+from PySide6.QtWidgets import *
+from PySide6.QtGui import *
 
 ########################################################################
 # IMPORT GUI FILE
@@ -187,7 +187,7 @@ if __name__ == "__main__":
     ########################################################################
     window = MainWindow()
     window.show()
-    sys.exit(app.exec_())
+    sys.exit(app.exec())
 ########################################################################
 ## END===>
 ########################################################################  
