@@ -7,10 +7,13 @@
 ########################################################################
 ## IMPORTS
 ########################################################################
-from PySide6 import QtWidgets, QtGui, QtCore
-from PySide6.QtCore import *
-from PySide6.QtGui import *
-from PySide6.QtWidgets import *
+import iconify as ico #pip install iconify
+from iconify.qt import QtGui, QtWidgets, QtCore
+from iconify.path import IconNotFoundError
+from PySide2 import QtWidgets, QtGui, QtCore
+from PySide2.QtCore import *
+from PySide2.QtGui import *
+from PySide2.QtWidgets import *
 # JSON FOR READING THE JSON STYLESHEET
 import json
 
@@ -562,32 +565,50 @@ def loadJsonStyle(buttonObject):
 
 def iconify(buttonObject, **iconCustomization):
     if "icon" in iconCustomization and len(iconCustomization['icon']) > 0:
-        # Use Qt standard icons instead of iconify
-        icon_name = iconCustomization['icon'].split(":")[-1]  # Get the last part of the icon name
-        
-        # Map some common iconify names to Qt standard icons
-        icon_map = {
-            "settings": QStyle.SP_FileDialogDetailedView,
-            "loader": QStyle.SP_BrowserReload,
-            "aperture": QStyle.SP_DesktopIcon,
-            "sliders": QStyle.SP_ComputerIcon,
-            "trending-up": QStyle.SP_ArrowUp,
-            "zap": QStyle.SP_MediaPlay,
-            "hexagon": QStyle.SP_DialogOkButton,
-            "heart": QStyle.SP_DialogYesButton,
-            "play": QStyle.SP_MediaPlay
-        }
-        
-        if icon_name.lower() in icon_map:
-            icon = buttonObject.style().standardIcon(icon_map[icon_name.lower()])
-            buttonObject.setIcon(icon)
-        
+        icon_name = iconCustomization['icon']
+        color_value = iconCustomization.get('color')
+        animation_value = iconCustomization.get('animation')
+
+        buttonObject.anim = None
+        if animation_value and len(animation_value) > 0:
+            if animation_value == "spin":
+                buttonObject.anim = ico.anim.Spin()
+            elif animation_value == "breathe":
+                buttonObject.anim = ico.anim.Breathe()
+            elif animation_value in ("breathe and spin", "spinn and breathe"):
+                buttonObject.anim = ico.anim.Spin() + ico.anim.Breathe()
+            else:
+                raise Exception("Unknown value '" + animation_value + "' for ico.animation(). Supported animations are 'spinn' and 'breathe'")
+
+        icon_kwargs = {}
+        if color_value and len(color_value) > 0:
+            icon_kwargs["color"] = QtGui.QColor(color_value)
+        if buttonObject.anim is not None:
+            icon_kwargs["anim"] = buttonObject.anim
+
+        try:
+            buttonObject.buttonIcon = ico.Icon(icon_name, **icon_kwargs)
+        except IconNotFoundError:
+            print("Icon '" + icon_name + "' not found. Skipping iconify for", buttonObject.objectName())
+            return
+
+        buttonObject.buttonIcon.setAsButtonIcon(buttonObject)
+
         if "size" in iconCustomization and int(iconCustomization['size']) > 0:
-            size = int(iconCustomization['size'])
-            buttonObject.setIconSize(QSize(size, size))
-            
+            buttonObject.setIconSize(QSize(int(iconCustomization['size']), int(iconCustomization['size'])))
+
+        if "animateOn" in iconCustomization and len(str(iconCustomization['animateOn'])) > 0:
+            if buttonObject.anim is not None:
+                if iconCustomization['animateOn'] == "all":
+                    buttonObject.anim.start()
+                elif iconCustomization['animateOn'] == "hover":
+                    buttonObject.setIconAnimatedOn = "hover"
+                elif iconCustomization['animateOn'] == "click":
+                    buttonObject.setIconAnimatedOn = "click"
+            else:
+                raise Exception("Please specify the button icon animation. Supported signature is 'animation': 'spinn' or 'animation': 'breathe'")
     else:
-        print("Failed to create the icon, please define the icon image")
+        print("Failed to create the icon, please define the icon image i.e icon = 'icon.image'")
 
 
 #######################################################################
