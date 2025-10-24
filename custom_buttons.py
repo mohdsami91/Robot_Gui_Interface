@@ -9,7 +9,6 @@
 ########################################################################
 import iconify as ico #pip install iconify
 from iconify.qt import QtGui, QtWidgets, QtCore
-from iconify.path import IconNotFoundError
 from PySide2 import QtWidgets, QtGui, QtCore
 from PySide2.QtCore import *
 from PySide2.QtGui import *
@@ -565,32 +564,22 @@ def loadJsonStyle(buttonObject):
 
 def iconify(buttonObject, **iconCustomization):
     if "icon" in iconCustomization and len(iconCustomization['icon']) > 0:
-        icon_name = iconCustomization['icon']
-        color_value = iconCustomization.get('color')
-        animation_value = iconCustomization.get('animation')
+        buttonObject.buttonIcon = ico.Icon(iconCustomization['icon'])
 
-        buttonObject.anim = None
-        if animation_value and len(animation_value) > 0:
-            if animation_value == "spin":
+        if "color" in iconCustomization and len(iconCustomization['color']) > 0:
+            buttonObject.buttonIcon = ico.Icon(iconCustomization['icon'], color=QtGui.QColor(iconCustomization['color']))
+
+        if "animation" in iconCustomization and len(iconCustomization['animation']) > 0:
+            if iconCustomization['animation'] == "spin":
                 buttonObject.anim = ico.anim.Spin()
-            elif animation_value == "breathe":
+            elif iconCustomization['animation'] == "breathe":
                 buttonObject.anim = ico.anim.Breathe()
-            elif animation_value in ("breathe and spin", "spinn and breathe"):
+            elif iconCustomization['animation'] == "breathe and spin" or iconCustomization['animation'] == "spinn and breathe":
                 buttonObject.anim = ico.anim.Spin() + ico.anim.Breathe()
             else:
-                raise Exception("Unknown value '" + animation_value + "' for ico.animation(). Supported animations are 'spinn' and 'breathe'")
+                raise Exception("Unknown value'" +iconCustomization['animation']+ "' for ico.animation(). Supported animations are 'spinn' and 'breathe'")
 
-        icon_kwargs = {}
-        if color_value and len(color_value) > 0:
-            icon_kwargs["color"] = QtGui.QColor(color_value)
-        if buttonObject.anim is not None:
-            icon_kwargs["anim"] = buttonObject.anim
-
-        try:
-            buttonObject.buttonIcon = ico.Icon(icon_name, **icon_kwargs)
-        except IconNotFoundError:
-            print("Icon '" + icon_name + "' not found. Skipping iconify for", buttonObject.objectName())
-            return
+            buttonObject.buttonIcon = ico.Icon(iconCustomization['icon'], color=QtGui.QColor(iconCustomization['color']), anim=buttonObject.anim)
 
         buttonObject.buttonIcon.setAsButtonIcon(buttonObject)
 
@@ -598,13 +587,14 @@ def iconify(buttonObject, **iconCustomization):
             buttonObject.setIconSize(QSize(int(iconCustomization['size']), int(iconCustomization['size'])))
 
         if "animateOn" in iconCustomization and len(str(iconCustomization['animateOn'])) > 0:
-            if buttonObject.anim is not None:
+            if "animation" in iconCustomization and len(str(iconCustomization['animation'])) > 0:
                 if iconCustomization['animateOn'] == "all":
                     buttonObject.anim.start()
                 elif iconCustomization['animateOn'] == "hover":
                     buttonObject.setIconAnimatedOn = "hover"
                 elif iconCustomization['animateOn'] == "click":
                     buttonObject.setIconAnimatedOn = "click"
+
             else:
                 raise Exception("Please specify the button icon animation. Supported signature is 'animation': 'spinn' or 'animation': 'breathe'")
     else:
