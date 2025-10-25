@@ -1,7 +1,5 @@
 ########################################################################
 ## SPINN DESIGN CODE
-# YOUTUBE: (SPINN TV) https://www.youtube.com/spinnTv
-# WEBSITE: spinndesign.com
 ########################################################################
 """
 READ ME:
@@ -13,7 +11,7 @@ through it but only change it if youre sure of what youre doing
 You can fully customize the buttons in the UI through the button_theme.json file.
 
 Before you get started, please ensure that you fully understand 
-the ICONIFY library, you can watch this video https://youtu.be/y9qQXn836K0 to help you understand.
+the ICONIFY library.
 These are the json keys supported(Please check the examples provided in the button_theme.json file)
 
 
@@ -64,9 +62,9 @@ Applying Iconfy from json is currently unstable, if you face problems then try a
 ## IMPORTS
 ########################################################################
 import sys
-import iconify as ico
-from iconify.qt import QtGui, QtWidgets, QtCore
-from PySide2.QtCore import *
+#Replaced the icon system with Qt's built-in standard iconsfrom PySide6.QtCore import *
+from PySide6.QtWidgets import *
+from PySide6.QtGui import *
 
 ########################################################################
 # IMPORT GUI FILE
@@ -76,7 +74,7 @@ from ui_interface import *
 ########################################################################
 # IMPORT CUSTOM BUTTONS FILE
 from custom_buttons import *
-########################################################################
+########################################################################k
 
 ########################################################################
 ## MAIN WINDOW CLASS
@@ -187,7 +185,7 @@ if __name__ == "__main__":
     ########################################################################
     window = MainWindow()
     window.show()
-    sys.exit(app.exec_())
+    sys.exit(app.exec())
 ########################################################################
 ## END===>
 ########################################################################  
