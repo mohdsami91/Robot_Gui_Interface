@@ -1,4 +1,4 @@
-### Fullscreen & Kiosk Mode Setup ##
+## Fullscreen & Kiosk Mode Setup ##
 
 from PyQt5 import QtWidgets, QtCore
 import sys
