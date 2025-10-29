@@ -9,19 +9,19 @@ This project is a Python-based GUI application using PySide2 that showcases adva
 It is recommended to use a virtual environment to manage project dependencies.
 
 ```bash
-python -m venv env
+python -m venv myenv
 ```
 
 ### 2. Activate the Environment
 
 **On Windows:**
 ```powershell
-.\env\Scripts\Activate.ps1
+.\myenv\Scripts\Activate.ps1
 ```
 
 **On macOS/Linux:**
 ```bash
-source env/bin/activate
+source myenv/bin/activate
 ```
 
 ### 3. Install Dependencies
