@@ -76,20 +76,20 @@ class DialDialog(QDialog):
         layout = QVBoxLayout()
         label = QLabel(title)
         label.setAlignment(Qt.AlignCenter)
-        label.setFont(QFont("Arial", 14, QFont.Bold))
+        label.setFont(QFont("Arial", 18, QFont.Bold))
         layout.addWidget(label)
 
         self.dial = QDial()
         self.dial.setRange(0, 100)
         self.dial.setValue(initial)
         self.dial.setNotchesVisible(True)
-        self.dial.setFixedSize(180, 180)
+        self.dial.setFixedSize(200, 200)
         self.dial.setWrapping(False)
         layout.addWidget(self.dial, alignment=Qt.AlignCenter)
 
         self.value_label = QLabel(f"{initial}%")
         self.value_label.setAlignment(Qt.AlignCenter)
-        self.value_label.setFont(QFont("Arial", 12))
+        self.value_label.setFont(QFont("Arial", 16, QFont.Bold))
         layout.addWidget(self.value_label)
 
         btn_close = QPushButton("Done")
@@ -119,11 +119,30 @@ class RobotKiosk(QWidget):
         # Top-level styling
         self.setStyleSheet("""
             QWidget { background-color: #0b0f14; color: #dbe7ff; font-family: 'Segoe UI'; }
-            QLabel#title { font-size: 22px; font-weight: 700; color: #9ad0ff; }
-            QPushButton.nav { background-color: transparent; color: #98c1ff; border: none; padding: 8px 14px; font-size:14px; }
+            QLabel#title { font-size: 28px; font-weight: 700; color: #9ad0ff; }
+            QPushButton.nav { background-color: transparent; color: #98c1ff; border: none; padding: 8px 14px; font-size:16px; }
             QPushButton.nav:hover { color: #ffffff; }
-            QFrame#topbar { background-color: #07101a; border-bottom: 1px solid #0e2a3b; }
-            QGroupBox { border: 1px solid #102233; border-radius: 8px; padding: 8px; margin-top: 8px; }
+            QFrame#topbar { background-color: #07101a; border-bottom: 3px solid #1e4b6b; }
+            QGroupBox { 
+                border: 3px solid #1e4b6b; 
+                border-radius: 8px; 
+                padding: 15px; 
+                margin-top: 12px;
+                background-color: #090e14;
+            }
+            QGroupBox::title {
+                color: #7eb5ff;
+                padding: 0 12px;
+                font-size: 16px;
+                font-weight: bold;
+            }
+            QLabel {
+                font-size: 14px;
+            }
+            QGroupBox QLabel {
+                color: #e6eef8;
+                font-size: 14px;
+            }
         """)
 
         # State for motors (simulated)
@@ -276,9 +295,9 @@ class RobotKiosk(QWidget):
         sliders = QVBoxLayout()
         sliders.addWidget(QLabel("Manual sliders"))
         s_row = QHBoxLayout()
-        self.s_arm = self._create_vertical_slider(self.motors["ARM"])
-        self.s_wrist = self._create_vertical_slider(self.motors["WRIST"])
-        self.s_tent = self._create_vertical_slider(self.motors["TENTACLE"])
+        self.s_arm = self._create_vertical_slider(self.motors["ARM"], "#5fc7ff")  # Blue for ARM
+        self.s_wrist = self._create_vertical_slider(self.motors["WRIST"], "#87ffb9")  # Green for WRIST
+        self.s_tent = self._create_vertical_slider(self.motors["TENTACLE"], "#ffbe7d")  # Orange for TENTACLE
         s_row.addWidget(self.s_arm)
         s_row.addWidget(self.s_wrist)
         s_row.addWidget(self.s_tent)
@@ -448,13 +467,34 @@ class RobotKiosk(QWidget):
     # ---------------------------
     # Helpers
     # ---------------------------
-    def _create_vertical_slider(self, initial=50):
+    def _create_vertical_slider(self, initial=50, color="#1f6feb"):
         sl = QSlider(Qt.Vertical)
         sl.setRange(0, 100)
         sl.setValue(initial)
         sl.setFixedHeight(180)
-        sl.setStyleSheet("""
-            QSlider::handle:vertical { background: #1f6feb; height: 16px; border-radius: 6px; }
+        sl.setStyleSheet(f"""
+            QSlider::groove:vertical {{
+                background: #1a2633;
+                width: 8px;
+                border-radius: 4px;
+            }}
+            QSlider::handle:vertical {{
+                background: {color};
+                height: 20px;
+                width: 20px;
+                margin: 0 -6px;
+                border-radius: 10px;
+            }}
+            QSlider::add-page:vertical {{
+                background: {color}66;
+                width: 8px;
+                border-radius: 4px;
+            }}
+            QSlider::sub-page:vertical {{
+                background: #1a2633;
+                width: 8px;
+                border-radius: 4px;
+            }}
         """)
         return sl
 
@@ -492,7 +532,25 @@ class RobotKiosk(QWidget):
 
     def _open_dial(self, motor_name):
         initial = self.motors.get(motor_name, 50)
+        # Set color based on motor
+        color_map = {
+            "ARM": "#5fc7ff",
+            "WRIST": "#87ffb9",
+            "TENTACLE": "#ffbe7d"
+        }
         dlg = DialDialog(f"{motor_name} Control", initial=initial, parent=self)
+        
+        # Apply custom style to the dial
+        dlg.dial.setStyleSheet(f"""
+            QDial {{
+                background-color: #0d1721;
+            }}
+            QDial::handle {{
+                background-color: {color_map.get(motor_name, "#1f6feb")};
+                border-radius: 10px;
+            }}
+        """)
+        
         # Center dialog on screen
         dlg.move(self.geometry().center() - dlg.rect().center())
         if dlg.exec_() == QDialog.Accepted:
