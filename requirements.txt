@@ -1,0 +1,26 @@
+# Core GUI framework for the robot's touchscreen interface
+PyQt5
+PyQt2
+
+=== Optional Hardware/Expansion Modules ===
+# For battery monitoring via INA219 sensor
+# adafruit-circuitpython-ina219
+
+# For battery fuel gauge (MAX17043/MAX17044)
+# adafruit-circuitpython-max1704x
+
+# For serial communication with ESP32/Arduino
+# pyserial
+
+# For Bluetooth modules and controllers
+# pybluez
+
+# For Raspberry Pi GPIO control
+# RPi.GPIO
+
+=== Optional Utilities ===
+# Numerical operations and sensor data smoothing
+# numpy
+
+#For handling config files and local settings
+# configparser
