@@ -425,6 +425,22 @@ class RobotKiosk(QWidget):
         debug_box.setLayout(d_layout)
         layout.addWidget(debug_box)
 
+        btn_shutdown = QPushButton("Shutdown Robot")
+        btn_shutdown.setStyleSheet("""
+            QPushButton {
+                background-color: #a83232;
+                color: white;
+                border-radius: 6px;
+                padding: 6px 10px;
+                font-weight: bold;
+            }
+            QPushButton:hover {
+                background-color: #c94444;
+            }
+        """)
+        btn_shutdown.clicked.connect(self._shutdown_robot)
+        d_layout.addWidget(btn_shutdown)
+
         layout.addStretch()
         page.setLayout(layout)
         return page
@@ -563,6 +579,12 @@ class RobotKiosk(QWidget):
         else:
             self.conn_label.setText("WiFi: disconnected")
             self.wifi_entry.setText("WiFi: Not connected (simulated)")
+    
+    def _shutdown_robot(self):
+        # For demonstration: close the kiosk window
+        print("Shutdown initiated... closing kiosk.")
+        self.close()
+    
 
     # ---------------------------
     # Keyboard / keypress
