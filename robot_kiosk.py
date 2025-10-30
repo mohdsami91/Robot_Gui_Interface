@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+#Install the required dependencies to run this script using requirements.txt file
 """
 robot_kiosk.py
 
