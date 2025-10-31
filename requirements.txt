@@ -1,6 +1,5 @@
 # Core GUI framework for the robot's touchscreen interface
 PyQt5
-PyQt2
 
 === Optional Hardware/Expansion Modules ===
 # For battery monitoring via INA219 sensor
