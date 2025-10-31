@@ -32,6 +32,12 @@ This project uses `uv` for fast package management. First, install `uv`:
 pip install uv
 ```
 
+Note: For running all the scripts in the repo, install all the requirements:
+
+```bash
+pip install -r requirements.txt
+```
+
 Then, install the required Python packages:
 
 ```bash
