@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# *- coding: utf-8 -*
 
 ################################################################################
 ## Form generated from reading UI file 'interfacenkDuTt.ui'
