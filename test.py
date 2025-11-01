@@ -11,8 +11,7 @@ through it but only change it if youre sure of what youre doing
 You can fully customize the buttons in the UI through the button_theme.json file.
 
 Before you get started, please ensure that you fully understand 
-the ICONIFY library, you can watch this video https://youtu.be/y9qQXn836K0 to help you understand.
-These are the json keys supported(Please check the examples provided in the button_theme.json file)
+the ICONIFY library. These are the json keys supported(Please check the examples provided in the button_theme.json file)
 
 
 name (the name of the button)
